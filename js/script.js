@@ -5,8 +5,17 @@ class App {
     this.spinner = document.querySelector('.spinner');
     this.movies = [];
     this.shows = [];
+    this.searchResults = [];
     this.currentMovie = null;
     this.currentShow = null;
+    this.#initializeEventListeners();
+  }
+
+  // INITIALIZE EVENT LISTENERS
+  #initializeEventListeners() {
+    document
+      .querySelector('.search__submitBtn')
+      .addEventListener('click', this.initializeSearch.bind(this));
   }
 
   // SHOW SPINNER WHILE FETCHING
@@ -171,6 +180,42 @@ class App {
       .addEventListener('click', () => window.history.back());
   }
 
+  // RENDER SERACH RESULTS
+  #renderSearchResults() {
+    let resultsContainer = document
+      .querySelector('.results')
+      .querySelector('.resultsContainer');
+    if (!resultsContainer) {
+      document
+        .querySelector('.results')
+        .insertAdjacentHTML(
+          'beforeend',
+          `<div class='resultsContainer'></div>`
+        );
+    }
+    resultsContainer = document.querySelector('.resultsContainer');
+    this.searchResults.forEach((result) => {
+      const resultCard = `<div class="resultCard" id=${result.id}>
+      <img
+        class="result__image"
+        src=${
+          result.poster_path
+            ? `https://image.tmdb.org/t/p/w500${result.poster_path}`
+            : './images/no-image.jpg'
+        }
+        alt="movie image"
+      />
+      <h2 class="result__title">
+        ${result.original_name || result.original_title}
+      </h2>
+      <p class="result__releaseDate">Release Date: ${this.#getFormattedDate(
+        result.release_date || result.first_air_date
+      )}</p>
+    </div>`;
+      resultsContainer.insertAdjacentHTML('beforeend', resultCard);
+    });
+  }
+
   // INITIALIZE MOVIES
   async initializeMovies() {
     const url = 'https://api.themoviedb.org/3/movie/popular';
@@ -264,7 +309,27 @@ class App {
   }
 
   // INITIALIZE SEARCH RESULTS
-  initializeSearch() {}
+  async initializeSearch(e) {
+    try {
+      const searchParams = new URLSearchParams(window.location.search);
+      const url = `https://api.themoviedb.org/3/search/${searchParams.get(
+        'type'
+      )}?query=${searchParams.get('query')}`;
+      const options = {
+        method: 'GET',
+        headers: {
+          accept: 'application/json',
+          Authorization:
+            'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4ZGE1MzkwNDg2YWJiMGVjMzEzZTkxM2NmMTg0MDZkOSIsInN1YiI6IjY1MTc4YTdjZDQ2NTM3MDllMDA2MjcwYSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.iw6TG1sCyAv8psbBrVxgUbstYb_AFpzYtyHnjms9dQI',
+        },
+      };
+      const data = await this.#fetchData(url, options);
+      this.searchResults = data.results;
+      this.#renderSearchResults();
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   // INITIALIZE APP
   init() {

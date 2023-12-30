@@ -26,25 +26,25 @@
           <h1 class="nowPlaying__text">Now Playing</h1>
         </section>
         <section class="main__search">
-          <form class="searchForm">
+          <form class="searchForm" action="/search.html">
             <div class="search__type">
               <span class="search__movies">
                 <input
                   id="movies"
                   type="radio"
                   name="type"
-                  value="movies"
+                  value="movie"
                   checked
                 />
                 <label for="movies">Movies</label>
               </span>
               <span class="search__shows">
-                <input id="shows" type="radio" name="type" value="shows" />
+                <input id="shows" type="radio" name="type" value="tv" />
                 <label for="shows">TV Shows</label>
               </span>
             </div>
             <div class="search__input">
-              <input type="text" placeholder="Search..." />
+              <input type="text" placeholder="Search..." name="query" />
               <button class="search__submitBtn">
                 <i class="fa fa-search"></i>
               </button>
