@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/font-awesome.min.css" />
+    <link rel="stylesheet" href="./css/styles.css" />
+    <script src="./js/script.js"></script>
+  </head>
+  <body>
+    <div id="root">
+      <header class="headerContainer">
+        <a class="header__heading">Flixx</a>
+        <a class="header__movies" href="./movies.html">Movies</a>
+        <a class="header__shows" href="./shows.html">TV Shows</a>
+      </header>
+      <main class="mainContainer">
+        <section class="main__nowPlaying">
+          <img
+            class="nowPlaying__backgroundImage"
+            src="./images/showcase-bg.jpg"
+            alt="now playing background image"
+          />
+          <h1 class="nowPlaying__text">Now Playing</h1>
+        </section>
+        <section class="main__search">
+          <form class="searchForm">
+            <div class="search__type">
+              <span class="search__movies">
+                <input id="movies" type="radio" name="type" value="movies" />
+                <label for="movies">Movies</label>
+              </span>
+              <span class="search__shows">
+                <input
+                  id="shows"
+                  type="radio"
+                  name="type"
+                  value="shows"
+                  checked
+                />
+                <label for="shows">TV Shows</label>
+              </span>
+            </div>
+            <div class="search__input">
+              <input type="text" placeholder="Search..." />
+              <button class="search__submitBtn">
+                <i class="fa fa-search"></i>
+              </button>
+            </div>
+          </form>
+        </section>
+        <section class="popularShows">
+          <h1 class="popularShows__heading">Popular Movies</h1>
+          <div class="spinner hide">
+            <i class="fa fa-solid fa-spinner fa-spin fa-2x"></i>
+          </div>
+        </section>
+      </main>
+      <footer class="footerContainer">
+        <p class="logo"><span>FLIXX</span></p>
+        <div class="social__links">
+          <a href="https://www.facebook.com" target="_blank"
+            ><i class="fa fa-facebook-f"></i
+          ></a>
+          <a href="https://www.twitter.com" target="_blank"
+            ><i class="fa fa-twitter"></i
+          ></a>
+          <a href="https://www.instagram.com" target="_blank"
+            ><i class="fa fa-instagram"></i
+          ></a>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>
