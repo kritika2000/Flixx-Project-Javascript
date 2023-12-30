@@ -15,7 +15,7 @@ class App {
   #initializeEventListeners() {
     document
       .querySelector('.search__submitBtn')
-      .addEventListener('click', this.initializeSearch.bind(this));
+      ?.addEventListener('click', this.initializeSearch.bind(this));
   }
 
   // SHOW SPINNER WHILE FETCHING
@@ -181,7 +181,7 @@ class App {
   }
 
   // RENDER SERACH RESULTS
-  #renderSearchResults() {
+  #renderSearchResults(type) {
     let resultsContainer = document
       .querySelector('.results')
       .querySelector('.resultsContainer');
@@ -194,6 +194,10 @@ class App {
         );
     }
     resultsContainer = document.querySelector('.resultsContainer');
+    resultsContainer.addEventListener('click', (e) => {
+      type === 'movie' && this.initializeMovieDetails(e);
+      type === 'tv' && this.initializeShowDetails(e);
+    });
     this.searchResults.forEach((result) => {
       const resultCard = `<div class="resultCard" id=${result.id}>
       <img
@@ -325,7 +329,7 @@ class App {
       };
       const data = await this.#fetchData(url, options);
       this.searchResults = data.results;
-      this.#renderSearchResults();
+      this.#renderSearchResults(searchParams.get('type'));
     } catch (err) {
       console.log(err);
     }
